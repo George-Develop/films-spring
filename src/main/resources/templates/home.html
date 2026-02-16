@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Films-Spring</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<h1 th:text="${appName}">Films-Spring</h1>
+
+<img src="/logo.png" alt="Logo" width="200"/>
+
+<h2>Каталог</h2>
+
+<ul>
+    <li><a th:href="@{/actors}">Актёры</a></li>
+    <li><a th:href="@{/genres}">Жанры</a></li>
+    <li><a th:href="@{/films}">Фильмы</a></li>
+</ul>
+
+</body>
+</html>
