@@ -1,6 +1,8 @@
 package com.eremkin.filmsspring.model;
 
 import jakarta.persistence.*;
+
+import java.util.HashSet;
 import java.util.Set;
 import jakarta.validation.constraints.*;
 
@@ -29,10 +31,16 @@ public class Film {
             joinColumns = @JoinColumn(name = "film_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
-    private Set<Genre> genres;
+    private Set<Genre> genres = new HashSet<>();
 
-    @OneToMany(mappedBy = "film", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<FilmActor> filmActors;
+    // 🎭 АКТЁРЫ
+    @ManyToMany
+    @JoinTable(
+            name = "film_actors",
+            joinColumns = @JoinColumn(name = "film_id"),
+            inverseJoinColumns = @JoinColumn(name = "actor_id")
+    )
+    private Set<Actor> actors = new HashSet<>();
 
     public Film(long id, String title, String description, int releaseYear) {
         this.id = id;
@@ -76,4 +84,20 @@ public class Film {
     public void setReleaseYear(Integer releaseYear) {
         this.releaseYear = releaseYear;
     }
+    public Set<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(Set<Genre> genres) {
+        this.genres = genres;
+    }
+
+    public Set<Actor> getActors() {
+        return actors;
+    }
+
+    public void setActors(Set<Actor> actors) {
+        this.actors = actors;
+    }
+
 }

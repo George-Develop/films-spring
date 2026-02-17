@@ -8,5 +8,23 @@
     <label>Год: <input type="number" th:field="*{releaseYear}" /></label>
     <div th:if="${#fields.hasErrors('releaseYear')}" th:errors="*{releaseYear}"></div>
 
+    <th:selected>
+        <select name="genreIds" multiple>
+            <option th:each="genre : ${allGenres}"
+                    th:value="${genre.id}"
+                    th:text="${genre.name}"
+                    th:selected="${film.genres.contains(genre)}">
+            </option>
+        </select>
+
+        <select name="actorIds" multiple>
+            <option th:each="actor : ${allActors}"
+                    th:value="${actor.id}"
+                    th:text="${actor.firstName + ' ' + actor.lastName}"
+                    th:selected="${film.actors.contains(actor)}">
+            </option>
+        </select>
+
+    </th:selected>
     <button type="submit">Сохранить</button>
 </form>

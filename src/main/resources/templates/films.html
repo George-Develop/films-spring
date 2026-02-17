@@ -13,6 +13,8 @@
         <th>Название</th>
         <th>Описание</th>
         <th>Год</th>
+        <th>Жанры</th>
+        <th>Актеры</th>
         <th>Действия</th>
     </tr>
     <tr th:each="film : ${films}">
@@ -20,6 +22,16 @@
         <td th:text="${film.title}"></td>
         <td th:text="${film.description}"></td>
         <td th:text="${film.releaseYear}"></td>
+        <td>
+    <span th:each="genre : ${film.genres}"
+          th:text="${genre.name + ' '}">
+    </span>
+        </td>
+        <td>
+    <span th:each="actor : ${film.actors}"
+          th:text="${actor.firstName + ' ' + actor.lastName + '  '}">
+    </span>
+        </td>
         <td>
             <form th:action="@{'/films/delete/' + ${film.id}}" method="post" style="display:inline">
                 <button type="submit">Удалить</button>
@@ -32,17 +44,32 @@
 
 <h2>Добавить фильм</h2>
 <form th:action="@{/films/add}" th:object="${film}" method="post">
-    <label>Название: <input type="text" th:field="*{title}" /></label>
-    <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
 
-    <label>Описание: <input type="text" th:field="*{description}" /></label>
-    <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+    <input type="text" th:field="*{title}" placeholder="Название"/>
 
-    <label>Год: <input type="number" th:field="*{releaseYear}" /></label>
-    <div th:if="${#fields.hasErrors('releaseYear')}" th:errors="*{releaseYear}"></div>
+    <input type="text" th:field="*{description}" placeholder="Описание"/>
+
+    <input type="number" th:field="*{releaseYear}" placeholder="Год"/>
+
+    <label>Жанры:</label>
+    <select name="genreIds" multiple>
+        <option th:each="genre : ${allGenres}"
+                th:value="${genre.id}"
+                th:text="${genre.name}">
+        </option>
+    </select>
+
+    <label>Актёры:</label>
+    <select name="actorIds" multiple>
+        <option th:each="actor : ${allActors}"
+                th:value="${actor.id}"
+                th:text="${actor.firstName + ' ' + actor.lastName}">
+        </option>
+    </select>
 
     <button type="submit">Добавить</button>
 </form>
+
 
 </body>
 </html>
