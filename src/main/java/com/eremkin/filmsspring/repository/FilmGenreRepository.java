@@ -1,21 +1,14 @@
 package com.eremkin.filmsspring.repository;
 
 import com.eremkin.filmsspring.model.FilmGenre;
-import org.springframework.jdbc.core.JdbcTemplate;
+import com.eremkin.filmsspring.model.FilmGenreId;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
-public class FilmGenreRepository {
-    private final JdbcTemplate jdbc;
-
-    public FilmGenreRepository(JdbcTemplate jdbc) {
-        this.jdbc = jdbc;
-    }
-
-    public int save(FilmGenre fg) {
-        return jdbc.update(
-                "INSERT INTO film_genres (film_id, genre_id) VALUES (?, ?)",
-                fg.getFilm().getId(), fg.getGenre().getId()
-        );
-    }
+public interface FilmGenreRepository extends JpaRepository<FilmGenre, FilmGenreId> {
+    List<FilmGenre> findByFilmId(Long filmId);
+    List<FilmGenre> findByGenreId(Long genreId);
 }
