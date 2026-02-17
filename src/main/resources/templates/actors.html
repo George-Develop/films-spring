@@ -1,14 +1,49 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Actors</title>
     <meta charset="UTF-8">
+    <title>Актёры</title>
 </head>
 <body>
+<h1>Список актёров</h1>
+<a href="/">Главная</a>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Дата рождения</th>
+        <th>Действия</th>
+    </tr>
+    <tr th:each="actor : ${actors}">
+        <td th:text="${actor.id}"></td>
+        <td th:text="${actor.firstName}"></td>
+        <td th:text="${actor.lastName}"></td>
+        <td th:text="${actor.birthDate}"></td>
+        <td>
+            <form th:action="@{'/actors/delete/' + ${actor.id}}" method="post" style="display:inline">
+                <button type="submit">Удалить</button>
+            </form>
+            <a th:href="@{'/actors/edit/' + ${actor.id}}">Изменить</a>
+        </td>
 
-<h1>Страница актёров</h1>
+    </tr>
+</table>
 
-<a th:href="@{/}">На главную</a>
+<h2>Добавить актёра</h2>
+<form th:action="@{/actors/add}" th:object="${actor}" method="post">
+    <label>Имя: <input type="text" th:field="*{firstName}" /></label>
+    <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+
+    <label>Фамилия: <input type="text" th:field="*{lastName}" /></label>
+    <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+
+    <label>Дата рождения: <input type="date" th:field="*{birthDate}" /></label>
+    <div th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></div>
+
+    <button type="submit">Добавить</button>
+</form>
+
 
 </body>
 </html>

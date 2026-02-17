@@ -2,18 +2,25 @@ package com.eremkin.filmsspring.model;
 
 import jakarta.persistence.*;
 import java.util.Set;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "films")
 public class Film {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Название фильма обязательно")
+    @Size(max = 255)
     private String title;
+
+    @Size(max = 1000)
     private String description;
 
-    @Column(name = "release_year")
+    @Min(value = 1800, message = "Год выпуска должен быть больше 1800")
+    @Max(value = 2100, message = "Год выпуска должен быть меньше 2100")
     private Integer releaseYear;
 
     @ManyToMany

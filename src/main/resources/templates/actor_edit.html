@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать актёра</title>
+</head>
+<body>
+<h1>Редактировать актёра</h1>
+<a href="/actors">Назад к списку</a>
+
+<form th:action="@{'/actors/edit/' + ${actor.id}}" th:object="${actor}" method="post">
+    <label>Имя: <input type="text" th:field="*{firstName}" /></label>
+    <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+
+    <label>Фамилия: <input type="text" th:field="*{lastName}" /></label>
+    <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+
+    <label>Дата рождения: <input type="date" th:field="*{birthDate}" /></label>
+    <div th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></div>
+
+    <button type="submit">Сохранить</button>
+</form>
+</body>
+</html>

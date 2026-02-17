@@ -1,23 +1,30 @@
 package com.eremkin.filmsspring.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
 @Table(name = "actors")
 public class Actor {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "first_name", nullable = false)
+    @NotBlank(message = "Имя не может быть пустым")
+    @Size(max = 100, message = "Имя не должно быть длиннее 100 символов")
     private String firstName;
 
-    @Column(name = "last_name", nullable = false)
+    @NotBlank(message = "Фамилия не может быть пустой")
+    @Size(max = 100, message = "Фамилия не должна быть длиннее 100 символов")
     private String lastName;
 
-    @Column(name = "birth_date")
+    @PastOrPresent(message = "Дата рождения не может быть в будущем")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
     @OneToMany(mappedBy = "actor", cascade = CascadeType.ALL, orphanRemoval = true)

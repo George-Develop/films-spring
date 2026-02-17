@@ -1,14 +1,48 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Films</title>
     <meta charset="UTF-8">
+    <title>Фильмы</title>
 </head>
 <body>
+<h1>Список фильмов</h1>
+<a href="/">Главная</a>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Название</th>
+        <th>Описание</th>
+        <th>Год</th>
+        <th>Действия</th>
+    </tr>
+    <tr th:each="film : ${films}">
+        <td th:text="${film.id}"></td>
+        <td th:text="${film.title}"></td>
+        <td th:text="${film.description}"></td>
+        <td th:text="${film.releaseYear}"></td>
+        <td>
+            <form th:action="@{'/films/delete/' + ${film.id}}" method="post" style="display:inline">
+                <button type="submit">Удалить</button>
+            </form>
+            <a th:href="@{'/films/edit/' + ${film.id}}">Изменить</a>
+        </td>
 
-<h1>Страница фильмов</h1>
+    </tr>
+</table>
 
-<a th:href="@{/}">На главную</a>
+<h2>Добавить фильм</h2>
+<form th:action="@{/films/add}" th:object="${film}" method="post">
+    <label>Название: <input type="text" th:field="*{title}" /></label>
+    <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+
+    <label>Описание: <input type="text" th:field="*{description}" /></label>
+    <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+
+    <label>Год: <input type="number" th:field="*{releaseYear}" /></label>
+    <div th:if="${#fields.hasErrors('releaseYear')}" th:errors="*{releaseYear}"></div>
+
+    <button type="submit">Добавить</button>
+</form>
 
 </body>
 </html>

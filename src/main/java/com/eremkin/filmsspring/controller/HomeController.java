@@ -12,19 +12,4 @@ public class HomeController {
         model.addAttribute("appName", "Films-Spring");
         return "home";
     }
-
-    @GetMapping("/actors")
-    public String actors() {
-        return "actors";
-    }
-
-    @GetMapping("/genres")
-    public String genres() {
-        return "genres";
-    }
-
-    @GetMapping("/films")
-    public String films() {
-        return "films";
-    }
 }

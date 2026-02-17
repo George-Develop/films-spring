@@ -2,15 +2,18 @@ package com.eremkin.filmsspring.model;
 
 import jakarta.persistence.*;
 import java.util.Set;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "genres")
 public class Genre {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @NotBlank(message = "Название жанра обязательно")
+    @Size(max = 255)
     private String name;
 
     @ManyToMany(mappedBy = "genres")

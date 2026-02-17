@@ -1,0 +1,5 @@
+<form th:action="@{'/genres/edit/' + ${genre.id}}" th:object="${genre}" method="post">
+    <label>Название: <input type="text" th:field="*{name}" /></label>
+    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+    <button type="submit">Сохранить</button>
+</form>

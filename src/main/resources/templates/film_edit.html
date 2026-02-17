@@ -1,0 +1,12 @@
+<form th:action="@{'/films/edit/' + ${film.id}}" th:object="${film}" method="post">
+    <label>Название: <input type="text" th:field="*{title}" /></label>
+    <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+
+    <label>Описание: <input type="text" th:field="*{description}" /></label>
+    <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+
+    <label>Год: <input type="number" th:field="*{releaseYear}" /></label>
+    <div th:if="${#fields.hasErrors('releaseYear')}" th:errors="*{releaseYear}"></div>
+
+    <button type="submit">Сохранить</button>
+</form>

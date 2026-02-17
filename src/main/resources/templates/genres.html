@@ -1,14 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Genres</title>
     <meta charset="UTF-8">
+    <title>Жанры</title>
 </head>
 <body>
+<h1>Список жанров</h1>
+<a href="/">Главная</a>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Название</th>
+        <th>Действия</th>
+    </tr>
+    <tr th:each="genre : ${genres}">
+        <td th:text="${genre.id}"></td>
+        <td th:text="${genre.name}"></td>
+        <td>
+            <form th:action="@{'/genres/delete/' + ${genre.id}}" method="post" style="display:inline">
+                <button type="submit">Удалить</button>
+            </form>
+            <a th:href="@{'/genres/edit/' + ${genre.id}}">Изменить</a>
+        </td>
+    </tr>
+</table>
 
-<h1>Страница жанров</h1>
-
-<a th:href="@{/}">На главную</a>
+<h2>Добавить жанр</h2>
+<form th:action="@{/genres/add}" th:object="${genre}" method="post">
+    <label>Название: <input type="text" th:field="*{name}" /></label>
+    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+    <button type="submit">Добавить</button>
+</form>
 
 </body>
 </html>
