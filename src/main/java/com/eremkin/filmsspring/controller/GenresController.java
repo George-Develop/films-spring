@@ -3,6 +3,7 @@ package com.eremkin.filmsspring.controller;
 import com.eremkin.filmsspring.model.Genre;
 import com.eremkin.filmsspring.repository.GenreRepository;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,6 +29,7 @@ public class GenresController {
         return "genres";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add")
     public String addGenre(@Valid @ModelAttribute("genre") Genre genre,
                            BindingResult bindingResult,
@@ -40,12 +42,14 @@ public class GenresController {
         return "redirect:/genres";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/delete/{id}")
     public String deleteGenre(@PathVariable Long id) {
         genreRepository.deleteById(id);
         return "redirect:/genres";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/edit/{id}")
     public String editGenreForm(@PathVariable Long id, Model model) {
         Genre genre = genreRepository.findById(id)
@@ -54,6 +58,7 @@ public class GenresController {
         return "genre_edit";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/edit/{id}")
     public String editGenre(@PathVariable Long id,
                             @Valid @ModelAttribute("genre") Genre genre,

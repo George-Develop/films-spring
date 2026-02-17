@@ -3,6 +3,7 @@ package com.eremkin.filmsspring.controller;
 import com.eremkin.filmsspring.model.Actor;
 import com.eremkin.filmsspring.repository.ActorRepository;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,6 +28,7 @@ public class ActorsController {
         return "actors";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add")
     public String addActor(@Valid @ModelAttribute("actor") Actor actor,
                            BindingResult bindingResult,
@@ -40,12 +42,14 @@ public class ActorsController {
     }
 
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/delete/{id}")
     public String deleteActor(@PathVariable Long id) {
         actorRepository.deleteById(id);
         return "redirect:/actors";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/edit/{id}")
     public String editActorForm(@PathVariable Long id, Model model) {
         Actor actor = actorRepository.findById(id)
@@ -54,6 +58,7 @@ public class ActorsController {
         return "actor_edit"; // новая страница для редактирования
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/edit/{id}")
     public String editActor(@PathVariable Long id,
                             @Valid @ModelAttribute("actor") Actor actor,

@@ -10,6 +10,17 @@
 
 <img src="/logo.png" alt="Logo" width="200"/>
 
+<div>
+    <p>Здравствуйте, <span th:text="${#authentication.name}"></span>!</p>
+    <p>Роли:</p>
+    <ul>
+        <li th:each="role : ${roles}" th:text="${role.getAuthority()}"></li>
+    </ul>
+    <form th:action="@{/logout}" method="post" style="display:inline">
+        <button type="submit">Выйти</button>
+    </form>
+</div>
+
 <h2>Каталог</h2>
 
 <ul>

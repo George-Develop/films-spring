@@ -6,6 +6,7 @@ import com.eremkin.filmsspring.repository.ActorRepository;
 import com.eremkin.filmsspring.repository.FilmRepository;
 import com.eremkin.filmsspring.repository.GenreRepository;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -37,6 +38,7 @@ public class FilmsController {
         return "films";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add")
     public String addFilm(@Valid @ModelAttribute("film") Film film,
                           BindingResult result,
@@ -66,12 +68,14 @@ public class FilmsController {
     }
 
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/delete/{id}")
     public String deleteFilm(@PathVariable Long id) {
         filmRepository.deleteById(id);
         return "redirect:/films";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/edit/{id}")
     public String editFilmForm(@PathVariable Long id, Model model) {
 
@@ -86,6 +90,7 @@ public class FilmsController {
     }
 
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/edit/{id}")
     public String updateFilm(@PathVariable Long id,
                              @Valid @ModelAttribute("film") Film film,

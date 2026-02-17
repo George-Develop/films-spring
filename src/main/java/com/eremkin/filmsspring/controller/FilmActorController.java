@@ -4,6 +4,7 @@ import com.eremkin.filmsspring.model.FilmActor;
 import com.eremkin.filmsspring.model.FilmActorId;
 import com.eremkin.filmsspring.repository.FilmActorRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,11 +34,13 @@ public class FilmActorController {
         return repository.findByActorId(actorId);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public FilmActor create(@RequestBody FilmActor filmActor) {
         return repository.save(filmActor);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping
     public ResponseEntity<Void> delete(@RequestBody FilmActorId id) {
         repository.deleteById(id);

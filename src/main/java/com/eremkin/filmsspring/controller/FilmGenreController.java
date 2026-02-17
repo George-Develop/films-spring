@@ -4,6 +4,7 @@ import com.eremkin.filmsspring.model.FilmGenre;
 import com.eremkin.filmsspring.model.FilmGenreId;
 import com.eremkin.filmsspring.repository.FilmGenreRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,11 +34,13 @@ public class FilmGenreController {
         return repository.findByGenreId(genreId);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public FilmGenre create(@RequestBody FilmGenre fg) {
         return repository.save(fg);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping
     public ResponseEntity<Void> delete(@RequestBody FilmGenreId id) {
         repository.deleteById(id);
